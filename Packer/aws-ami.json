@@ -1,0 +1,38 @@
+{
+    "builders": [
+      {
+        "type": "amazon-ebs",
+        "ami_name": "s5wesley",
+        "instance_type": "t2.medium",
+        "region": "us-east-1",
+        "source_ami_filter": {
+          "filters": {
+            "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
+            "virtualization-type": "hvm",
+            "root-device-type": "ebs"
+          },
+          "most_recent": true,
+          "owners": ["099720109477"]
+        },
+        "ssh_username": "ubuntu",
+        "tags": {
+          "Name": "s5wesley-ubuntu-20.04"
+        }
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "./ec2_packages.sh",
+        "destination": "/tmp/ec2_packages.sh"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo chmod +x /tmp/ec2_packages.sh",
+          "sudo bash /tmp/ec2_packages.sh"
+        ]
+      }
+    ]
+  }
+  
