@@ -2,7 +2,7 @@
     "builders": [
       {
         "type": "amazon-ebs",
-        "ami_name": "s5wesley",
+        "ami_name": "s5wesley-jenkins-slave",
         "instance_type": "t2.medium",
         "region": "us-east-1",
         "source_ami_filter": {
@@ -16,21 +16,21 @@
         },
         "ssh_username": "ubuntu",
         "tags": {
-          "Name": "s5wesley-ubuntu-20.04"
+          "Name": "s5wesley-jenkins-slave-ubuntu-20.04"
         }
       }
     ],
     "provisioners": [
       {
         "type": "file",
-        "source": "./ec2_packages.sh",
-        "destination": "/tmp/ec2_packages.sh"
+        "source": "./jenkins-slave.sh",
+        "destination": "/tmp/jenkins-slave.sh"
       },
       {
         "type": "shell",
         "inline": [
-          "sudo chmod +x /tmp/ec2_packages.sh",
-          "sudo bash /tmp/ec2_packages.sh"
+          "sudo chmod +x /tmp/jenkins-slave.sh",
+          "sudo bash /tmp/jenkins-slave.sh"
         ]
       }
     ]

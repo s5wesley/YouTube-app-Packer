@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "wesley" {
-  ami_name             = "s5wesley"
+  ami_name             = "wesley-master-jenkins"
   instance_type        = "t2.medium"
   region               = "us-east-1"
   source_ami_filter {
@@ -22,25 +22,25 @@ source "amazon-ebs" "wesley" {
   }
   ssh_username         = "ubuntu"
   tags = {
-    Name = "s5wesley-ubuntu-20.04"
+    Name = "s5wesley-jenkins-master-ubuntu-20.04"
   }
 }
 
 build {
-  name = "ubuntu-20.40-wesley"
+  name = "ubuntu-20.40-wesley-master-jenkins"
   sources = [
     "amazon-ebs.wesley"
   ]
 
   provisioner "file" {
-    source      = "./ec2_packages.sh"
-    destination = "/tmp/ec2_packages.sh"
+    source      = "./jenkins-master.sh"
+    destination = "/tmp/jenkins-master.sh"
   }
 
   provisioner "shell" {
     inline = [
-      "sudo chmod +x /tmp/ec2_packages.sh",
-      "sudo bash /tmp/ec2_packages.sh"
+      "sudo chmod +x /tmp/jenkins-master.sh",
+      "sudo bash /tmp/jenkins-master.sh"
     ]
   }
 }
